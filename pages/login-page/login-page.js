@@ -1,4 +1,5 @@
-// pages/login-page/login-page.js
+import {fetch} from '../../utils/fetch.js'
+
 Page({
   data: {
     phone: '15177777777',
@@ -15,7 +16,7 @@ Page({
     })
   },
   // 获取验证码：
-  getVcode() {
+  async getVcode() {
     // 判断是否正在进行倒计时,如果正在倒计时则无法点击：
     if (this.data.isCountDown) return
 
@@ -60,27 +61,22 @@ Page({
       })
     }, 500)
 
-    wx.showLoading({
-      title: '获取验证码...',
-    })
-    wx.request({
-      url: 'http://127.0.0.1:3000/api/user/vcode',
+    const res = await fetch({
+      url: 'user/vcode',
+      tips: '获取验证码...',
       data: {
         phone: this.data.phone
-      },
-      success: res => {
-        wx.showToast({
-          title: `${res.data.vcode}`,
-          icon: 'none',
-          duration: 1000
-        })
-      },
-      complete: () => {
-        wx.hideLoading()
       }
     })
+
+    // 验证成功则执行：
+    wx.showToast({
+      title: `${res.data.vcode}`,
+      icon: 'none',
+      duration: 1000
+    })
   },
-  phoneLogin() {
+  async phoneLogin() {
     // 开始手机号和验证码正则校验：
     var checkPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/
     if (!checkPhone.test(this.data.phone)) {
@@ -104,43 +100,40 @@ Page({
       return
     }
 
-    wx.showLoading({
-      title: '登陆中...'
-    })
-    wx.request({
-      url: 'http://127.0.0.1:3000/api/user/login',
+    const res = await fetch ({
+      url: 'user/login',
       method: 'POST',
+      isLogin: true,
+      tips: '登陆中...',
       data: {
         phone: this.data.phone,
         vcode: this.data.vcode
-      },
-      success: res => {
-        if (res.data.status === 0) {
-          // 提示：
-          wx.showToast({
-            title: res.data.message,
-            icon: 'none',
-            duration: 1000
-          })
-          // 保存token到本地
-          wx.setStorageSync('my_token', res.data.token)
-
-          // 跳转到首页
-          wx.reLaunch({
-            url: '/pages/home/home',
-          })
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: 'none',
-            duration: 1000
-          })
-        }
-      },
-      complete: () => {
-        wx.hideLoading()
       }
     })
+
+    // 验证成功则执行：
+    if (res.data.status === 0) {
+      // 提示：
+      wx.showToast({
+        title: res.data.message,
+        icon: 'none',
+        duration: 1000
+      })
+      // 保存token到本地
+      wx.setStorageSync('my_token', res.data.token)
+
+      // 跳转到首页
+      wx.reLaunch({
+        url: '/pages/home/home',
+      })
+    } else {
+      wx.showToast({
+        title: res.data.message,
+        icon: 'none',
+        duration: 1000
+      })
+    }
+
   },
   onUnload () {
     // 页面卸载时清楚定时器：

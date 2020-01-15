@@ -83,6 +83,13 @@
 					"id": -1,
 					"name": "手机号登陆后页面",
 					"pathName": "pages/login-page/login-page",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/login-page/login-page",
+					"pathName": "pages/login-page/login-page",
 					"scene": null
 				}
 			]

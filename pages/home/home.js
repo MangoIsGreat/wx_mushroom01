@@ -20,12 +20,12 @@ Page({
     this.getCourseData()
   },
 
-  getSwiperData () {
-    fetch ({
+  async getSwiperData () {
+    const res = await fetch ({
       url: 'home/swipers'
-    }).then((res) => {
-      console.log(res)
     })
+
+    console.log(res)
   },
 
   async getCourseData () {
