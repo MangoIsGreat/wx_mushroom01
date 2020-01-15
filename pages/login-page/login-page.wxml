@@ -4,7 +4,7 @@
 	<text class="subtitle">用户即时获取课程最新信息</text>
 	<view class="content">
 		<input type="number" bindinput="changeData" data-name="phone" value="{{phone}}" class="phone" placeholder="请输入您的手机号"></input>
-		<view bindtap="getVcode" class="get_vcode">获取验证码</view>
+		<view bindtap="getVcode" style="color:{{isCountDown ? '#999' : '#000' }}" class="get_vcode">{{tips}}</view>
 		<input type="number" bindinput="changeData" data-name="vcode" value="{{vcode}}" class="vcode" placeholder="请输入验证码"></input>
 	</view>
 	<view class="phone-login">
