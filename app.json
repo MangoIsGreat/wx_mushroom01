@@ -5,7 +5,9 @@
     "pages/home/home",
     "pages/course/course",
     "pages/study/study",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/course-detail/course-detail",
+    "pages/search/search"
   ],
   "tabBar": {
     "color": "#999",
@@ -37,7 +39,7 @@
         "iconPath": "assets/tabs/icon_my@2x.png",
         "selectedIconPath": "assets/tabs/icon_my_selected@2x.png"
       }
-  ]
+    ]
   },
   "window": {
     "backgroundTextStyle": "light",

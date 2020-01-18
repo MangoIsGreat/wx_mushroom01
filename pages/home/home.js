@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    swipers: [],  //轮播图数据
+    course: [],  //推荐课程
+    videos: []  //热门视频
   },
 
   /**
@@ -18,6 +20,8 @@ Page({
     this.getSwiperData()
 
     this.getCourseData()
+
+    this.getVideosData()
   },
 
   async getSwiperData () {
@@ -25,7 +29,9 @@ Page({
       url: 'home/swipers'
     })
 
-    console.log(res)
+    this.setData({
+      swipers: res.data.message
+    })
   },
 
   async getCourseData () {
@@ -33,7 +39,26 @@ Page({
       url: 'home/course'
     })
 
-    console.log(res)
+    this.setData({
+      course: res.data.message
+    })
+  },
+
+  async getVideosData () {
+    const res = await fetch({
+      url: 'home/video'
+    })
+
+    this.setData({
+      videos: res.data.message
+    })
+  },
+
+  // 跳转到课程首页：
+  goToCourse () {
+    wx.switchTab({
+      url: '/pages/course/course'
+    })
   }
 
   
