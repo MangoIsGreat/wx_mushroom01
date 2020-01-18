@@ -1,4 +1,6 @@
 <view class="home-container">
+    <!-- 请输入课程的名称 -->
+    <search-bar tips="请输入课程名称"></search-bar>
     <!-- 轮播图 -->
     <swiper autoplay circular interval="3000">
         <navigator url="/pages/course-detail/course-detail?id={{item.id}}" wx:for="{{swipers}}" wx:key="*this">
